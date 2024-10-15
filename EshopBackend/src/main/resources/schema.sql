@@ -1,0 +1,21 @@
+--CREATE TABLE IF NOT EXISTS Users (
+--     id BIGINT AUTO_INCREMENT PRIMARY KEY,
+--     Username VARCHAR(255),
+--     Password VARCHAR(255),
+--     Email VARCHAR(255),
+--     FirstName VARCHAR(255),
+--     LastName VARCHAR(255),
+--     Role VARCHAR(50)
+----     Orders
+----     Favorites
+--);
+--
+--CREATE TABLE IF NOT EXISTS Products (
+--    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+--    ProductName VARCHAR(255),
+--    ProductDescription VARCHAR(255),
+--    ProductPrice FLOAT,
+--    ProductSalePrice FLOAT,
+--    ProductStock INT
+----    ProductReviews VARCHAR(255),
+--);
