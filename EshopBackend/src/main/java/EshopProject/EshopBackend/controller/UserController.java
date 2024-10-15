@@ -3,6 +3,7 @@ package EshopProject.EshopBackend.controller;
 import EshopProject.EshopBackend.model.appUser;
 import EshopProject.EshopBackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +16,12 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping("/users")
     public appUser createUser(@RequestBody appUser user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userService.createUser(user);
     }
 
