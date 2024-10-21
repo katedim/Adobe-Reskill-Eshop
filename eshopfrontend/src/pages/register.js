@@ -3,6 +3,7 @@
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 
 export default function Register() {
   const [email, setEmail] = useState('');
@@ -107,6 +108,9 @@ export default function Register() {
             >
               Register
             </button>
+            <Link href="/login" className="text-blue-500 hover:underline">
+              Login
+            </Link>
           </div>
         </form>
       </div>

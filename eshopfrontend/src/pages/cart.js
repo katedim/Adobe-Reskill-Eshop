@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Cart() {
-  const { isLoggedIn, userRole } = useAuth();
+  const { isLoggedIn, userRole, userId } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true); // Loading state
 
@@ -21,6 +21,7 @@ export default function Cart() {
     return <div>Loading...</div>; // You can replace this with a spinner if you like
   }
 console.log(userRole)
+console.log(userId)
   // Check user role
   if (userRole.includes('ROLE_ADMIN')) {
     return (

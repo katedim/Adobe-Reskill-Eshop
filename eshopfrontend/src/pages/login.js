@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useAuth } from './context/AuthContext';
+import Link from 'next/link';
 
 export default function Login() {
   const [username, setUsername] = useState('');
@@ -22,10 +23,11 @@ export default function Login() {
       if (response.ok) {
         const data = await response.json();
         const role = data.role; 
-        console.log(role);
+        const userId = data.userId; 
+        console.log(role, userId);
         
-        login(role); 
-        router.push('/cart'); 
+        login(role, userId); 
+        router.push('/orders'); 
       } else {
         alert('Login failed. Please check your credentials.');
       }
@@ -67,6 +69,9 @@ export default function Login() {
             >
               Login
             </button>
+            <Link href="/register" className="text-blue-500 hover:underline">
+              Register now
+            </Link>
           </div>
         </form>
       </div>

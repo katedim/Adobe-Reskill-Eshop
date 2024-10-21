@@ -1,27 +1,31 @@
-// context/AuthContext.js
 import { createContext, useContext, useState } from 'react';
 
 const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userRole, setUserRole] = useState([]); // Change from null to empty array
+  const [userRole, setUserRole] = useState(null);
+  const [userId, setUserId] = useState(null);  // Add userId state
 
-  const login = (role) => {
+  const login = (role, id) => {
     setIsLoggedIn(true);
-    setUserRole(role ? role.split(',') : []); 
-};
+    setUserRole(role);
+    setUserId(id);  // Store userId when user logs in
+  };
 
   const logout = () => {
     setIsLoggedIn(false);
-    setUserRole([]); // Set userRole back to an empty array
+    setUserRole(null);
+    setUserId(null);  // Clear userId on logout
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, userRole, login, logout }}>
+    <AuthContext.Provider value={{ isLoggedIn, userRole, userId, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
-};
+}
 
-export const useAuth = () => useContext(AuthContext);
+export function useAuth() {
+  return useContext(AuthContext);
+}

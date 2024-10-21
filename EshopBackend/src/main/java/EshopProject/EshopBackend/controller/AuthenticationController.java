@@ -1,6 +1,8 @@
 package EshopProject.EshopBackend.controller;
 
+import EshopProject.EshopBackend.model.appUser;
 import EshopProject.EshopBackend.service.UserDetailService;
+import EshopProject.EshopBackend.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+
 @RestController
 @RequestMapping("rest/auth")
 public class AuthenticationController {
@@ -23,11 +26,8 @@ public class AuthenticationController {
     @Autowired
     private UserDetailService userDetailsService;
 
-    @GetMapping("/welcome")
-    public String welcome() {
-        return "Hey! Welcome";
-    }
-
+    @Autowired
+    private UserServiceImpl userService; // Correctly autowire this service
 
     @GetMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestHeader("Authorization") String authHeader) {
@@ -36,15 +36,17 @@ public class AuthenticationController {
             String username = credentials[0];
             String password = credentials[1];
 
-
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
             if (!new org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder().matches(password, userDetails.getPassword())) {
                 return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
             }
 
+            appUser user = userService.getUserByUsername(username);
+
             Map<String, String> response = new HashMap<>();
             response.put("username", userDetails.getUsername());
+            response.put("userId", String.valueOf(user.getId()));
             response.put("role", userDetails.getAuthorities().stream()
                     .map(GrantedAuthority::getAuthority)
                     .collect(Collectors.joining(",")));

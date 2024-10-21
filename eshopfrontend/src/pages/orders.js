@@ -4,10 +4,11 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 export default function Orders() {
-  const { isLoggedIn, userRole } = useAuth();
+  const { isLoggedIn, userRole, userId } = useAuth();
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true); // Loading state
-
+console.log(userRole);
+console.log(userId);
   useEffect(() => {
     if (!isLoggedIn) {
       router.push('/login');
