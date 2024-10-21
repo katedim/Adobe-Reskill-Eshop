@@ -1,0 +1,52 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #ffffff; /* Light background color */
+  --foreground: #171717; /* Dark text color */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a; /* Dark background color */
+    --foreground: #ededed; /* Light text color */
+  }
+}
+
+body {
+  color: var(--foreground); /* Set body text color */
+  background: var(--background); /* Set body background color */
+  font-family: Arial, Helvetica, sans-serif; /* Default font family */
+  padding-top: 76px; /* Space for the fixed header */
+  margin: 0; /* Reset default body margin */
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance; /* Custom utility for text wrapping */
+  }
+}
+
+/* Additional styling to ensure sticky footer */
+#root {
+  display: flex; /* Flex container */
+  flex-direction: column; /* Column layout */
+  min-height: 100vh; /* Minimum height of the viewport */
+}
+
+.main {
+  flex: 1; /* Allow main content to grow and fill available space */
+}
+
+/* Footer Styles */
+footer {
+  background-color: #333; /* Footer background color */
+  color: white; /* Footer text color */
+  text-align: center; /* Center align text */
+  padding: 10px 0; /* Padding for footer */
+  position: fixed; /* Make the footer fixed */
+  left: 0; /* Align to the left */
+  right: 0; /* Align to the right */
+  bottom: 0; /* Stick to the bottom of the viewport */
+}

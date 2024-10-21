@@ -1,14 +1,20 @@
 package EshopProject.EshopBackend.controller;
 
-import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@Controller
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
 public class ContentController {
 
+
     @GetMapping("/home")
-    public String handleWelcome() {
-        return "home";
+            public Map<String, String> handleWelcome() {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Welcome, you are authenticated!");
+        return response;
     }
 
     @GetMapping("/admin/home")
