@@ -1,31 +1,45 @@
 package EshopProject.EshopBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Table(name = "Orders")
 @Entity
 public class Order {
 
     @Id
-    @Column(name = "ID")
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-//    add createdDate, state
+    @Column(name = "created_date", nullable = false, updatable = false)
+    private LocalDateTime createdDate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", referencedColumnName = "ID")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "state", nullable = false)
+    private OrderState state;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    @JsonBackReference
     private appUser user;
 
+//
+//    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Product> products = new ArrayList<>();
+
+    public Order() {
+        this.createdDate = LocalDateTime.now();
+        this.state = OrderState.IN_PROGRESS;
+    }
 
     @ManyToMany
-    @JoinTable(
-            name = "order_products",
-            joinColumns = @JoinColumn(name = "order_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id")
-    )
-    private List<Product> products;
+    Set<Product> productItems;
+
 
     public long getId() {
         return id;
@@ -43,11 +57,41 @@ public class Order {
         this.user = user;
     }
 
-    public List<Product> getProducts() {
-        return products;
+//    public List<Product> getProducts() {
+//        return products;
+//    }
+//
+//    public void setProducts(List<Product> products) {
+//        this.products = products;
+//    }
+//
+
+    public LocalDateTime getCreatedDate() {
+        return createdDate;
     }
 
-    public void setProducts(List<Product> products) {
-        this.products = products;
+    public void setCreatedDate(LocalDateTime createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public OrderState getState() {
+        return state;
+    }
+
+    public void setState(OrderState state) {
+        this.state = state;
+    }
+
+    public enum OrderState {
+        IN_PROGRESS,
+        DELIVERED
+    }
+
+    public Set<Product> getProductItems() {
+        return productItems;
+    }
+
+    public void setProductItems(Set<Product> productItems) {
+        this.productItems = productItems;
     }
 }
