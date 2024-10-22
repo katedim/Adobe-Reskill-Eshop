@@ -4,6 +4,8 @@ package EshopProject.EshopBackend.controller;
 import EshopProject.EshopBackend.model.Product;
 import EshopProject.EshopBackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -37,8 +39,14 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{productId}")
-    public String deleteProductById(@PathVariable("productId") Long productId) {
-        productService.deleteProductById(productId);
-        return "Deleted Successfully";
+    public ResponseEntity<String> deleteProductById(@PathVariable("productId") Long productId) {
+        try {
+            productService.deleteProductById(productId);
+            return ResponseEntity.ok("Product deleted successfully");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        }
     }
 }

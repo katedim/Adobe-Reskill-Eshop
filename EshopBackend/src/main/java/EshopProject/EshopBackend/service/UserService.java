@@ -13,7 +13,7 @@ public interface UserService {
 //    Get all Users
     List<appUser> getUsersList();
 
-//    Get Product By ID
+//    Get User By ID
     Optional<appUser> getUserById(Long userId);
 
 //    Edit User

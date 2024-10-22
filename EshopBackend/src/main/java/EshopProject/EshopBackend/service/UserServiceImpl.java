@@ -46,15 +46,40 @@ public class UserServiceImpl implements UserService{
     }
 
 //    TBD
-    @Override
-    public appUser updateUser(appUser user, Long userId) {
-        appUser currentUser = userRepository.findById(userId).get();
+@Override
+public appUser updateUser(appUser user, Long userId) {
 
-        if (Objects.nonNull(user.getUsername()) && !"".equalsIgnoreCase(user.getUsername())) {
-            currentUser.setUsername(user.getUsername());
-        }
-        return userRepository.save(currentUser);
+    Optional<appUser> optionalUser = userRepository.findById(userId);
+
+    if (optionalUser.isEmpty()) {
+        throw new RuntimeException("User with ID " + userId + " not found");
     }
+
+    appUser currentUser = optionalUser.get();
+
+    if (Objects.nonNull(user.getUsername()) && !"".equalsIgnoreCase(user.getUsername())) {
+        currentUser.setUsername(user.getUsername());
+    }
+
+    if (Objects.nonNull(user.getPassword()) && !"".equalsIgnoreCase(user.getPassword())) {
+        currentUser.setPassword(user.getPassword());
+    }
+
+    if (Objects.nonNull(user.getEmail()) && !"".equalsIgnoreCase(user.getEmail())) {
+        currentUser.setEmail(user.getEmail());
+    }
+
+    if (Objects.nonNull(user.getFirstname()) && !"".equalsIgnoreCase(user.getFirstname())) {
+        currentUser.setFirstname(user.getFirstname());
+    }
+
+    if (Objects.nonNull(user.getLastname()) && !"".equalsIgnoreCase(user.getLastname())) {
+        currentUser.setLastname(user.getLastname());
+    }
+
+    return userRepository.save(currentUser);
+}
+
 
     @Override
     public void deleteUserById(Long userId) {
