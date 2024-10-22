@@ -43,8 +43,8 @@ public class Product {
 //    @JoinColumn(name = "order_id")
 //    @JsonBackReference
 //    private Order order;
-@ManyToMany
-Set<Order> items;
+//@ManyToMany
+//Set<Order> items;
 
 
     public long getId() {
@@ -111,11 +111,11 @@ Set<Order> items;
         this.product_reviews = product_reviews;
     }
 
-    public Set<Order> getItems() {
-        return items;
-    }
-
-    public void setItems(Set<Order> items) {
-        this.items = items;
-    }
+//    public Set<Order> getItems() {
+//        return items;
+//    }
+//
+//    public void setItems(Set<Order> items) {
+//        this.items = items;
+//    }
 }
