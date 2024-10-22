@@ -37,7 +37,7 @@ public class Order {
         this.state = OrderState.IN_PROGRESS;
     }
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     Set<Product> productItems;
 
 
