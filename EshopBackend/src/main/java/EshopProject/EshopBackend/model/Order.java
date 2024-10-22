@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Table(name = "Orders")
 @Entity
@@ -35,6 +36,9 @@ public class Order {
         this.createdDate = LocalDateTime.now();
         this.state = OrderState.IN_PROGRESS;
     }
+
+    @ManyToMany
+    Set<Product> productItems;
 
 
     public long getId() {
@@ -81,5 +85,13 @@ public class Order {
     public enum OrderState {
         IN_PROGRESS,
         DELIVERED
+    }
+
+    public Set<Product> getProductItems() {
+        return productItems;
+    }
+
+    public void setProductItems(Set<Product> productItems) {
+        this.productItems = productItems;
     }
 }

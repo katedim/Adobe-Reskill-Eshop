@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Table(name = "Product")
 @Entity
@@ -42,7 +43,8 @@ public class Product {
 //    @JoinColumn(name = "order_id")
 //    @JsonBackReference
 //    private Order order;
-
+@ManyToMany
+Set<Order> items;
 
 
     public long getId() {
@@ -109,5 +111,11 @@ public class Product {
         this.product_reviews = product_reviews;
     }
 
+    public Set<Order> getItems() {
+        return items;
+    }
 
+    public void setItems(Set<Order> items) {
+        this.items = items;
+    }
 }
