@@ -2,6 +2,7 @@ package EshopProject.EshopBackend.model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "appUser")
@@ -32,7 +33,7 @@ public class appUser {
     private String role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Order> orders;
+    private List<Order> orders = new ArrayList<>();
 
     public long getId() {
         return id;

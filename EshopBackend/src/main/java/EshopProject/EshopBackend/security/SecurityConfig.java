@@ -35,8 +35,13 @@ public class SecurityConfig {
                     registry.requestMatchers("/home").permitAll();
                     registry.requestMatchers("/users").permitAll();
                     registry.requestMatchers("/allUsers").permitAll();
+                    registry.requestMatchers("/allProducts").permitAll();
+                    registry.requestMatchers("/order").permitAll();
+                    registry.requestMatchers("/products/**").permitAll();
+                    registry.requestMatchers("/allOrders").permitAll();
                     registry.requestMatchers("/admin/**").hasRole("ADMIN");
                     registry.requestMatchers("/user/**").hasAnyRole("USER", "ADMIN");
+                    registry.requestMatchers("/users/**").hasAnyRole("USER", "ADMIN");
                     registry.requestMatchers("/h2-console/**").permitAll();
                     registry.anyRequest().authenticated();
                 })

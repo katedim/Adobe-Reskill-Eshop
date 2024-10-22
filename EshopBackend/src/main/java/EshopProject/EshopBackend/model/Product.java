@@ -1,6 +1,10 @@
 package EshopProject.EshopBackend.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 @Table(name = "Product")
@@ -34,8 +38,11 @@ public class Product {
     @Column(name = "product_reviews")
     private String product_reviews;
 
-    @ManyToMany(mappedBy = "products")
-    private List<Order> orders;
+//    @ManyToOne
+//    @JoinColumn(name = "order_id")
+//    @JsonBackReference
+//    private Order order;
+
 
 
     public long getId() {
@@ -102,11 +109,5 @@ public class Product {
         this.product_reviews = product_reviews;
     }
 
-    public List<Order> getOrders() {
-        return orders;
-    }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
-    }
 }
