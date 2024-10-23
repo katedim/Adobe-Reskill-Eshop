@@ -39,5 +39,5 @@ console.log(userId)
     );
   }
 
-  return <div>Unauthorized access</div>; // You can customize this message
+  return <div>Unauthorized access</div>;
 }
