@@ -45,7 +45,9 @@ export default function Header() {
           <Link href="/cart">
             <FaShoppingCart className="text-white text-xl cursor-pointer hover:text-green-500" />
           </Link>
+          <Link href="/profile">
           <FaUser className="text-white text-xl cursor-pointer hover:text-blue-500" />
+          </Link>
         </div>
       </div>
     </header>

@@ -27,7 +27,7 @@ export default function Login() {
         console.log(role, userId);
         
         login(role, userId); 
-        router.push('/orders'); 
+        router.push('/'); 
       } else {
         alert('Login failed. Please check your credentials.');
       }
