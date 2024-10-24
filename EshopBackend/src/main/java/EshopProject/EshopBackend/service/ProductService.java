@@ -4,6 +4,7 @@ import EshopProject.EshopBackend.model.Product;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface ProductService {
 
@@ -21,4 +22,6 @@ public interface ProductService {
 
 //    Delete Product
     void deleteProductById(Long productId);
+
+    Set<String> getUniqueCategories();
 }
