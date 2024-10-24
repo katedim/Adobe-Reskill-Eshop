@@ -3,6 +3,7 @@ package EshopProject.EshopBackend.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -19,7 +20,7 @@ public class Cart {
     private appUser user;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
-    private Set<Product> productItems;
+    private Set<Product> productItems = new HashSet<>();
 
     // Getters and setters
     public long getId() {

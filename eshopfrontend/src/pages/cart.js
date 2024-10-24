@@ -7,21 +7,22 @@ export default function Cart() {
   const router = useRouter();
   const [cart, setCart] = useState(null);  
   const [loading, setLoading] = useState(true);
- 
+
+  // Redirect to login if the user is not logged in
   useEffect(() => {
     if (!isLoggedIn) {
       router.push('/login');
     }
-  }, [isLoggedIn, userId, router]);
- 
+  }, [isLoggedIn, router]);
+
+  // Fetch the cart data only if the user is logged in
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/cart/${userId}`, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem('authToken')}`,   
-          },
-        });
+        const response = await fetch(`http://localhost:8080/cart/${userId}`); // Fetch cart without Authorization header
+        if (!response.ok) {
+          throw new Error('Failed to fetch cart');
+        }
         const data = await response.json();
         setCart(data);
         setLoading(false);
@@ -34,8 +35,8 @@ export default function Cart() {
     if (isLoggedIn) {
       fetchCart();
     }
-  }, [isLoggedIn, userId]);
- 
+  }, [isLoggedIn, userId]); // Fetch cart when isLoggedIn or userId changes
+
   const handleRemoveProduct = async (productId, productName) => {
     const userConfirmed = window.confirm(`Are you sure you want to remove the ${productName} from your cart?`);
     
@@ -47,7 +48,6 @@ export default function Cart() {
       const response = await fetch(`http://localhost:8080/cart/${cart.id}/removeProduct/${productId}`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,  
           'Content-Type': 'application/json',
         },
       });
@@ -55,30 +55,29 @@ export default function Cart() {
       if (!response.ok) {
         throw new Error('Failed to remove product');
       }
- 
-      const updatedCartResponse = await fetch(`http://localhost:8080/cart/${userId}`, {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,  
-        },
-      });
+
+      // Fetch the updated cart
+      const updatedCartResponse = await fetch(`http://localhost:8080/cart/${userId}`);
+      if (!updatedCartResponse.ok) {
+        throw new Error('Failed to fetch updated cart');
+      }
       const updatedCart = await updatedCartResponse.json();
       setCart(updatedCart);
     } catch (error) {
       console.error('Error removing product:', error);
     }
   };
- 
+
   const handleBuyNow = async () => {
     try {
       const response = await fetch(`http://localhost:8080/order`, {
         method: 'POST',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,   
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          user: { id: userId },  
-          productItems: cart.productItems,  
+          user: { id: userId },
+          productItems: cart.productItems,
         }),
       });
 
@@ -92,19 +91,16 @@ export default function Cart() {
       const emptyCartResponse = await fetch(`http://localhost:8080/cart/${cart.id}/emptyCart`, {
         method: 'PUT',
         headers: {
-          'Authorization': `Bearer ${localStorage.getItem('authToken')}`,
           'Content-Type': 'application/json',
         },
       });
-  
+
       if (!emptyCartResponse.ok) {
         throw new Error('Failed to empty the cart');
       }
-  
-      const updatedCart = await emptyCartResponse.json();
 
- 
-      setCart(updatedCart);  
+      const updatedCart = await emptyCartResponse.json();
+      setCart(updatedCart);
      
     } catch (error) {
       console.error('Error creating order:', error);
@@ -112,15 +108,14 @@ export default function Cart() {
     }
   };
 
-   
   if (loading) {
     return <p>Loading cart...</p>;
   }
- 
+
   if (!cart || !cart.productItems || !cart.productItems.length) {
     return <p>No cart available.</p>;
   }
- 
+
   return (
     <div className='card-space'>
       <h1>Available Cart</h1>
