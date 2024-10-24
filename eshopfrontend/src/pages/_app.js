@@ -1,4 +1,3 @@
-// pages/_app.js
 import "@/styles/globals.css";
 import { AuthProvider } from "./context/AuthContext";
 import Header from "./header";
@@ -11,9 +10,9 @@ export default function App({ Component, pageProps }) {
 
   return (
     <AuthProvider>
-      <div id="root" className="flex flex-col min-h-screen"> {/* This makes sure the root takes up at least the full height of the viewport */}
+      <div id="root" className="flex flex-col min-h-screen"> 
         {!noHeaderFooterRoutes.includes(router.pathname) && <Header />}
-        <main className="main flex-grow"> {/* Flex-grow makes sure the main content takes available space */}
+        <main className="main flex-grow"> 
           <Component {...pageProps} />
         </main>
         {!noHeaderFooterRoutes.includes(router.pathname) && <Footer />}

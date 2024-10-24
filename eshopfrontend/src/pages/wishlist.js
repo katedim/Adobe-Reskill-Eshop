@@ -1,43 +1,66 @@
-// src/pages/cart.js
-import { useAuth } from './context/AuthContext';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import { useAuth } from './context/AuthContext';
 
 export default function Wishlist() {
-  const { isLoggedIn, userRole, userId } = useAuth();
+  const { isLoggedIn, userId } = useAuth();
   const router = useRouter();
-  const [isLoading, setIsLoading] = useState(true); // Loading state
+  const [favorites, setFavorites] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+ 
     if (!isLoggedIn) {
       router.push('/login');
-    } else {
-      setIsLoading(false); // Set loading to false if logged in
     }
   }, [isLoggedIn, router]);
 
-  // Show loading message
-  if (isLoading) {
-    return <div>Loading...</div>; // You can replace this with a spinner if you like
-  }
-console.log(userRole)
-console.log(userId)
-  // Check user role
-  if (userRole.includes('ROLE_ADMIN')) {
-    return (
-      <div>
-        Admin
-        <button onClick={() => router.push('/orders')}>Go to Orders</button>
-      </div>
-    );
-  } else if (userRole.includes('ROLE_USER')) {
-    return (
-      <div>
-        User
-        <button onClick={() => router.push('/orders')}>Go to Orders</button>
-      </div>
-    );
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      console.log(localStorage);  
+      try { 
+        const response = await fetch(`http://localhost:8080/user/${userId}/favorites`);
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        setFavorites(data);  
+        setLoading(false);
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching favorites:', error);
+        setLoading(false);
+      }
+    };
+
+    if (isLoggedIn) {
+      fetchFavorites();
+    }
+  }, [isLoggedIn, userId]);
+
+  if (loading) {
+    return <p>Loading favorites...</p>;
   }
 
-  return <div>Unauthorized access</div>;
+  if (!favorites.length) {
+    return <p>No favorite projects available.</p>;
+  }
+
+  return (
+    <div className='card-space'>
+      <h1>Your Favorites</h1>
+      <div className="product-list">
+        {favorites.map((favorite) => (
+          <div key={favorite.id} className="product-card">
+            <h2>{favorite.product_name}</h2>
+            <p>{favorite.product_description}</p>
+            <p>Price: ${favorite.product_price}</p>
+            <p>Sale Price: ${favorite.product_sale_price}</p>
+            <p>Stock: {favorite.product_stock}</p>
+            <p>Reviews: {favorite.product_reviews}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }

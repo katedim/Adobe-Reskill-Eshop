@@ -37,7 +37,13 @@ body {
 
 .main {
   flex: 1; /* Allow main content to grow and fill available space */
+  margin-bottom: 130px; /* Keep your existing bottom margin */
+  padding: 0 20px; /* Add horizontal padding */
+  max-width: 1200px; /* Set a max-width to control how wide the content gets */
+  margin-left: auto; /* Center the main content */
+  margin-right: auto; /* Center the main content */
 }
+
 
 /* Footer Styles */
 footer {
@@ -63,6 +69,10 @@ footer {
   padding: 16px;
   width: 250px;
   border-radius: 8px;
+  display: flex;  
+  flex-direction: column;  
+  justify-content: space-between;  
+  min-height: 300px;  
 }
 
 .product-card h2 {
@@ -164,4 +174,20 @@ footer {
 
 .remove-button:hover {
   background-color: #c9302c;  
+}
+
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end; /* Aligns buttons at the bottom */
+}
+
+.add-to-cart-button {
+  margin-left: 8px;
+  margin-bottom: 2px; /* Bottom margin */
+}
+
+.favorite-button {
+  margin-bottom: 8px; /* Bottom margin */
+  margin-right: 8px; /* Right margin */
 }
