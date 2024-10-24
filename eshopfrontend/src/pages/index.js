@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from "next/link";
 import { useAuth } from './context/AuthContext';
 
 export default function Home() {
@@ -45,18 +46,20 @@ export default function Home() {
   }
 
   return (
-    <div>
+    <div className='card-space'>
       <h1>Available Products</h1>
       <div className="product-list">
         {products.map((product) => (
           <div key={product.id} className="product-card">
-            <h2>{product.product_name}</h2>
-            <p>{product.product_description}</p>
-            <p>Category: {product.product_category}</p>
-            <p>Price: ${product.product_price}</p>
-            <p>Sale Price: ${product.product_sale_price}</p>
-            <p>Stock: {product.product_stock}</p>
-            <p>Reviews: {product.product_reviews}</p>
+            <Link href={`/singleProduct?productId=${product.id}`}>
+              <h2>{product.product_name}</h2>
+              <p>{product.product_description}</p>
+              <p>Category: {product.product_category}</p>
+              <p>Price: ${product.product_price}</p>
+              <p>Sale Price: ${product.product_sale_price}</p>
+              <p>Stock: {product.product_stock}</p>
+              <p>Reviews: {product.product_reviews}</p>
+            </Link>
           </div>
         ))}
       </div>
