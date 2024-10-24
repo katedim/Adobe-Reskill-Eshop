@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService{
@@ -48,5 +49,19 @@ public class OrderServiceImpl implements OrderService{
         appUser user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
         return orderRepository.findByUser(user); // Assuming you have a method in OrderRepository
+    }
+
+    @Override
+    public Order updateOrder(Order order) {
+        // Check if the order exists
+        Optional<Order> updateOrder = orderRepository.findById(order.getId());
+        if (updateOrder.isPresent()) {
+            Order existingOrder = updateOrder.get();
+            existingOrder.setState(order.getState());
+
+            return orderRepository.save(existingOrder);
+        } else {
+            throw new RuntimeException("Order not found with id: " + order.getId());
+        }
     }
 }

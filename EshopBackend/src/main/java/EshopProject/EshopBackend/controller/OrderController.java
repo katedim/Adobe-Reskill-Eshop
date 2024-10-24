@@ -68,4 +68,11 @@ public class OrderController {
         return orderService.findOrdersByUserId(userId);
     }
 
+    @PutMapping("/admin/updateOrder/{orderId}")
+    public Order updateOrder(@RequestBody Order order,@PathVariable("orderId") Long orderId) {
+        return orderService.updateOrder(order);
+
+    }
+
+
 }

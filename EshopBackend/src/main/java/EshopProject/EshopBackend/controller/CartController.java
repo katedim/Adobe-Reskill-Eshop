@@ -53,7 +53,7 @@ public class CartController {
         return cartRepository.save(existingCart);
     }
 
-    @PutMapping("/{userId}/addProduct/{productId}")
+    @PutMapping("/{cartId}/removeProduct/{productId}")
     public Cart removeProductFromCart(@PathVariable Long cartId, @PathVariable Long productId) {
         // Fetch the cart by its ID
         Cart existingCart = cartService.getCartById(cartId);
@@ -83,5 +83,10 @@ public class CartController {
     @GetMapping("/{userId}")
     public Cart getCartByUserId(@PathVariable Long userId) {
         return cartService.getCartByUser(userId);
+    }
+
+    @PutMapping("/{cartId}/emptyCart")
+    public Cart emptyCart(@PathVariable Long cartId) {
+        return cartService.emptyCart(cartId);
     }
 }

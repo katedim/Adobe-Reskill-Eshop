@@ -36,6 +36,9 @@ export default function Register() {
       if (response.ok) {
         const data = await response.json();
         console.log('User registered:', data);
+ 
+        await createCartForUser(data.id);  
+        
         router.push('/');
       } else {
         alert('Registration failed. Please check your details.');
@@ -43,6 +46,27 @@ export default function Register() {
     } catch (error) {
       console.error('Error registering user:', error);
       alert('An error occurred while trying to register.');
+    }
+  };
+
+  const createCartForUser = async (userId) => {
+    try {
+      const cartData = { user: { id: userId }, productItems: [] };  
+      const response = await fetch('http://localhost:8080/cart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(cartData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to create cart');
+      }
+
+      console.log('Cart created successfully');
+    } catch (error) {
+      console.error('Error creating cart:', error);
     }
   };
 
