@@ -14,5 +14,6 @@ public interface OrderService {
 
     List<Order> findOrdersByUserId(Long userId);
 
+    Order updateOrder(Order order);
 
 }

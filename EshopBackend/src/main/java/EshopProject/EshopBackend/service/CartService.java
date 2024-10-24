@@ -8,4 +8,6 @@ public interface CartService {
     Cart getCartByUser(Long userId);
 
     Cart getCartById(Long cartId);
+
+    Cart emptyCart(Long cartId);
 }

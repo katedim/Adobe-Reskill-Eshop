@@ -84,8 +84,7 @@ public class Order {
 
     public enum OrderState {
         IN_PROGRESS,
-        DELIVERED,
-        CART
+        DELIVERED
     }
 
     public Set<Product> getProductItems() {

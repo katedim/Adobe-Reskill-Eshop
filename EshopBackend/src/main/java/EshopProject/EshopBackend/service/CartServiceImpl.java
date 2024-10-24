@@ -35,4 +35,17 @@ public class CartServiceImpl implements CartService {
         Optional<Cart> optionalCart = cartRepository.findById(cartId);
         return optionalCart.orElseThrow(() -> new RuntimeException("Cart with id " + cartId + " not found"));
     }
+
+    @Override
+    public Cart emptyCart(Long cartId) {
+        Cart cart = cartRepository.findById(cartId)
+                .orElseThrow(() -> new RuntimeException("Cart not found with id " + cartId));
+
+        if (cart.getProductItems() != null && !cart.getProductItems().isEmpty()) {
+            cart.getProductItems().clear();
+            cartRepository.save(cart);
+        }
+        return cart;
+    }
+
 }

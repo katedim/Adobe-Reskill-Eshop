@@ -36,7 +36,7 @@ public class SecurityConfig {
                     registry.requestMatchers("/users").permitAll();
                     registry.requestMatchers("/allUsers").permitAll();
                     registry.requestMatchers("/allProducts").permitAll();
-                    registry.requestMatchers("/order").permitAll();
+                    registry.requestMatchers("/order/**").permitAll();
                     registry.requestMatchers("/products/**").permitAll();
                     registry.requestMatchers("/allOrders").permitAll();
                     registry.requestMatchers("/cart/**").permitAll();
