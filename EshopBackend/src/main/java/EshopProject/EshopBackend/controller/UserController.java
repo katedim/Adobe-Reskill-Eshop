@@ -37,6 +37,7 @@ public class UserController {
 
     @PutMapping("/users/{userId}")
     public appUser updateUser(@RequestBody appUser user,@PathVariable("userId") Long userId) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userService.updateUser(user, userId);
     }
 

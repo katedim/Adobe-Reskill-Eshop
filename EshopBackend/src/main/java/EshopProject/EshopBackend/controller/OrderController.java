@@ -58,34 +58,14 @@ public class OrderController {
         return orderRepository.save(order);
     }
 
-
-//
-//    @PostMapping("/order")
-//    public Order createOrder(@RequestBody Order order) {
-//        // Find the user by ID
-//        appUser user = userRepository.findById(order.getUser().getId())
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//        order.setUser(user);
-//
-//        // Process the products
-//        List<Product> products = new ArrayList<>();
-//        for (Product product : order.getProducts()) {
-//            Product existingProduct = productRepository.findById(product.getId())
-//                    .orElseThrow(() -> new RuntimeException("Product with id " + product.getId() + " not found"));
-//            products.add(existingProduct);
-//        }
-//
-//        // Set the products for the order
-//        order.setProducts(products);
-//
-//        // Save the order
-//        return orderRepository.save(order);
-//    }
-
     @GetMapping("/allOrders")
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
     }
 
+    @GetMapping("/order/{userId}")
+    public List<Order> getOrdersByUserId(@PathVariable Long userId) {
+        return orderService.findOrdersByUserId(userId);
+    }
 
 }
