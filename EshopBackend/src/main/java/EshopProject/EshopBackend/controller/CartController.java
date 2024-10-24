@@ -7,6 +7,8 @@ import EshopProject.EshopBackend.repository.ProductRepository;
 import EshopProject.EshopBackend.repository.UserRepository;
 import EshopProject.EshopBackend.service.CartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashSet;
@@ -29,9 +31,14 @@ public class CartController {
     private CartRepository cartRepository;
 
     @PostMapping
-    public Cart createCart(@RequestBody Cart cart) {
-        System.out.println("Creating cart for user: " + cart.getUser().getId());
-        return cartService.saveCart(cart);
+    public Cart createCart(@RequestParam Long userId) {
+        return userRepository.findById(userId)
+                .map(user -> {
+                    Cart cart = new Cart();
+                    cart.setUser(user);
+                    return cartService.saveCart(cart);
+                })
+                .orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
     }
 
     @PutMapping("/{cartId}/addProduct/{productId}")
@@ -81,8 +88,12 @@ public class CartController {
     }
 
     @GetMapping("/{userId}")
-    public Cart getCartByUserId(@PathVariable Long userId) {
-        return cartService.getCartByUser(userId);
+    public ResponseEntity<Cart> getCartByUserId(@PathVariable Long userId) {
+        Cart cart = cartService.getCartByUser(userId);
+        if (cart == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        return ResponseEntity.ok(cart);
     }
 
     @PutMapping("/{cartId}/emptyCart")

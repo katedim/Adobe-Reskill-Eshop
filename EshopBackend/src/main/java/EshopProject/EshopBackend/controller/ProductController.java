@@ -18,7 +18,7 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @PostMapping("/products")
+    @PostMapping("/admin/products")
     public Product createProduct(@RequestBody Product product) {
         return productService.createProduct(product);
     }
@@ -33,12 +33,12 @@ public class ProductController {
         return productService.getProductById(productId);
     }
 
-    @PutMapping("/products/{productId}")
+    @PutMapping("/admin/products/{productId}")
     public Product updateProduct(@RequestBody Product product, @PathVariable("productId") Long productId) {
         return productService.updateProduct(product, productId);
     }
 
-    @DeleteMapping("/products/{productId}")
+    @DeleteMapping("/admin/products/{productId}")
     public ResponseEntity<String> deleteProductById(@PathVariable("productId") Long productId) {
         try {
             productService.deleteProductById(productId);
