@@ -5,6 +5,7 @@ import EshopProject.EshopBackend.model.Product;
 import EshopProject.EshopBackend.repository.ProductRepository;
 import EshopProject.EshopBackend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -17,6 +18,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private ProductRepository productRepository;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public appUser createUser(appUser user) {
@@ -55,7 +59,8 @@ public class UserServiceImpl implements UserService {
         }
 
         if (Objects.nonNull(user.getPassword()) && !"".equalsIgnoreCase(user.getPassword())) {
-            currentUser.setPassword(user.getPassword());
+            System.out.println(user.getPassword());
+            currentUser.setPassword(passwordEncoder.encode(user.getPassword()));
         }
 
         if (Objects.nonNull(user.getEmail()) && !"".equalsIgnoreCase(user.getEmail())) {
