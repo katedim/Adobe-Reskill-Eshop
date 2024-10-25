@@ -32,4 +32,6 @@ public interface UserService {
     appUser removeFavoriteProduct(Long userId, Long productId);
 
     List<Product> getFavoritesByUserId(Long userId);
+
+    appUser getUserByEmail(String email);
 }

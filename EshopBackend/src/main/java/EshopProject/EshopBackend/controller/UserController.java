@@ -11,6 +11,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -27,10 +28,24 @@ public class UserController {
     private ProductService productService;
 
     @PostMapping("/users")
-    public appUser createUser(@RequestBody appUser user) {
+    public ResponseEntity<Map<String, Object>> createUser(@RequestBody appUser user) {
+        if (userService.getUserByUsername(user.getUsername()) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", "The username is not available."));
+        }
+
+        if (userService.getUserByEmail(user.getEmail()) != null) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of("message", "The email is already in use."));
+        }
+
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userService.createUser(user);
+        appUser savedUser = userService.createUser(user);
+
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                Map.of("message", "User created successfully.", "id", savedUser.getId())
+        );
     }
+
 
     @GetMapping("/allUsers")
     public List<appUser> getAllUsers() {

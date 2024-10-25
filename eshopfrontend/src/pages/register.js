@@ -1,5 +1,3 @@
-// components/Register.js
-
 'use client';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
@@ -16,48 +14,50 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const userData = {
-      email,
-      firstname,
-      lastname,
-      username,
-      password,
-      role: 'USER',
+        email,
+        firstname,
+        lastname,
+        username,
+        password,
+        role: 'USER',
     };
 
     try {
-      const response = await fetch('http://localhost:8080/users', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userData),
-      });
+        const response = await fetch('http://localhost:8080/users', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(userData),
+        });
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log('User registered:', data);
- 
-        await createCartForUser(data.id);  
-        
-        router.push('/');
-      } else {
-        alert('Registration failed. Please check your details.');
-      }
+        if (response.ok) {
+            const data = await response.json();
+            console.log('User registered:', data);
+            
+            await createCartForUser(data.id);  
+            router.push('/');
+        } else {
+            const errorData = await response.json(); 
+            console.log('Error:', errorData.message); 
+            alert(errorData.message || 'Registration failed. Please check your details.');
+        }
     } catch (error) {
-      console.error('Error registering user:', error);
-      alert('An error occurred while trying to register.');
+        console.error('Error registering user:', error);
+        alert('An error occurred while trying to register.');
     }
-  };
+};
+
 
   const createCartForUser = async (userId) => {
     try {
-        const cartData = userId;  // Just send userId directly in the body
+        const cartData = userId;
         const response = await fetch('http://localhost:8080/cart', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(cartData), // Send userId
+            body: JSON.stringify(cartData),
         });
 
         if (!response.ok) {

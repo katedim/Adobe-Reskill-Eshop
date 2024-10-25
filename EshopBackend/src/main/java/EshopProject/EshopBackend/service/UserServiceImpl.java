@@ -140,4 +140,10 @@ public class UserServiceImpl implements UserService {
         return Collections.emptyList();
     }
 
+    @Override
+    public appUser getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+
 }
