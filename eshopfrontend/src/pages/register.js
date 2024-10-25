@@ -51,24 +51,25 @@ export default function Register() {
 
   const createCartForUser = async (userId) => {
     try {
-      const cartData = { user: { id: userId }, productItems: [] };  
-      const response = await fetch('http://localhost:8080/cart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(cartData),
-      });
+        const cartData = userId;  // Just send userId directly in the body
+        const response = await fetch('http://localhost:8080/cart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(cartData), // Send userId
+        });
 
-      if (!response.ok) {
-        throw new Error('Failed to create cart');
-      }
+        if (!response.ok) {
+            throw new Error('Failed to create cart');
+        }
 
-      console.log('Cart created successfully');
+        console.log('Cart created successfully');
     } catch (error) {
-      console.error('Error creating cart:', error);
+        console.error('Error creating cart:', error);
     }
-  };
+};
+
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

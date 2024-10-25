@@ -31,7 +31,7 @@ public class CartController {
     private CartRepository cartRepository;
 
     @PostMapping
-    public Cart createCart(@RequestParam Long userId) {
+    public Cart createCart(@RequestBody Long userId) {
         return userRepository.findById(userId)
                 .map(user -> {
                     Cart cart = new Cart();
@@ -40,6 +40,7 @@ public class CartController {
                 })
                 .orElseThrow(() -> new RuntimeException("User with id " + userId + " not found"));
     }
+
 
     @PutMapping("/{cartId}/addProduct/{productId}")
     public Cart addProductToCart(@PathVariable Long cartId, @PathVariable Long productId) {
