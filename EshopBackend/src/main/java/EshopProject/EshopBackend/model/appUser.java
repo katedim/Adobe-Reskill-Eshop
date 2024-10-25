@@ -40,7 +40,7 @@ public class appUser {
 
     @ManyToMany
     @JoinTable(
-            name = "user_favorites", // Join table to map the relationship
+            name = "user_favorites",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id")
     )

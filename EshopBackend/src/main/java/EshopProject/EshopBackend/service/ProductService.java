@@ -24,4 +24,6 @@ public interface ProductService {
     void deleteProductById(Long productId);
 
     Set<String> getUniqueCategories();
+
+    List<Product> filterProductsByCategory(List<Product> allProducts, String category);
 }

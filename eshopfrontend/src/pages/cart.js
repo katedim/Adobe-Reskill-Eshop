@@ -133,7 +133,11 @@ export default function Cart() {
           </div>
         ))}
       </div>
-      <button className='buy-now-button' onClick={handleBuyNow}>Buy Now</button>
+      {/* Centered Buy Now Button */}
+      <div className="buy-now-container">
+        <button className='buy-now-button' onClick={handleBuyNow}>Buy Now</button>
+      </div>
     </div>
   );
+  
 }

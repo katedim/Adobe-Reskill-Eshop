@@ -56,4 +56,11 @@ public class ProductController {
         Set<String> categories = productService.getUniqueCategories();
         return ResponseEntity.ok(categories);
     }
+
+    @GetMapping("/products/category/{category}")
+    public List<Product> getProductsByCategory(@PathVariable("category") String category) {
+        List<Product> allProducts = productService.getProductsList();
+        return productService.filterProductsByCategory(allProducts, category);
+    }
+
 }

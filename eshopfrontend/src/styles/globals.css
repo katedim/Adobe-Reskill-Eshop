@@ -61,7 +61,7 @@ footer {
 .product-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 25px;
 }
 
 .product-card {
@@ -190,4 +190,26 @@ footer {
 .favorite-button {
   margin-bottom: 8px; /* Bottom margin */
   margin-right: 8px; /* Right margin */
+}
+
+.buy-now-container {
+  display: flex;
+  justify-content: center; /* Center the button horizontally */
+  margin-top: 30px; /* Add more top margin */
+}
+
+.buy-now-button {
+  background-color: #3498db; /* Blue for buy now button */
+  color: white;
+  padding: 15px 25px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.buy-now-button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
 }

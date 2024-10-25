@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -108,4 +109,13 @@ public class ProductServiceImpl implements ProductService{
         }
         return uniqueCategories;
     }
+
+    @Override
+    public List<Product> filterProductsByCategory(List<Product> allProducts, String category) {
+        return allProducts.stream()
+                .filter(product -> product.getProduct_category() != null &&
+                        product.getProduct_category().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
+    }
+
 }

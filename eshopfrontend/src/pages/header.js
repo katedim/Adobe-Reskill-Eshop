@@ -50,11 +50,11 @@ export default function Header() {
             />
           </Link>
           <nav className="flex space-x-6">
-            {/* Map through categories to create links */}
             {categories.map((category, index) => (
               <Link key={index} href={`/${category.toLowerCase()}`} className="text-white font-semibold hover:underline">
-                {category}
-              </Link>
+              {category}
+            </Link>
+            
             ))}
           </nav>
         </div>
