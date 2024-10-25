@@ -6,7 +6,7 @@ import { useAuth } from "./context/AuthContext";
 import { useRouter } from "next/router";
 
 export default function Header() {
-  const { logout } = useAuth();
+  const { logout, userRole } = useAuth();  
   const router = useRouter();
   const [categories, setCategories] = useState([]);
 
@@ -52,9 +52,8 @@ export default function Header() {
           <nav className="flex space-x-6">
             {categories.map((category, index) => (
               <Link key={index} href={`/${category.toLowerCase()}`} className="text-white font-semibold hover:underline">
-              {category}
-            </Link>
-            
+                {category}
+              </Link>
             ))}
           </nav>
         </div>
@@ -76,6 +75,15 @@ export default function Header() {
               <Link href="/orders">Orders</Link>
             </div>
           </div>
+
+          {/* Conditionally render the Admin button based on user role */}
+          {userRole?.includes("ADMIN") && (
+            <Link href="/admin">
+              <button className="text-white text-xl cursor-pointer hover:text-yellow-500">
+                Admin
+              </button>
+            </Link>
+          )}
 
           <button
             onClick={handleLogout}
