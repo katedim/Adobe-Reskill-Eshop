@@ -6,10 +6,8 @@ import EshopProject.EshopBackend.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -97,4 +95,27 @@ public class ProductServiceImpl implements ProductService{
             throw new RuntimeException("Product with id " + productId + " not found");
         }
     }
+
+    @Override
+    public Set<String> getUniqueCategories() {
+        List<Product> products = getProductsList();
+        Set<String> uniqueCategories = new HashSet<>();
+
+        for (Product product : products) {
+            String category = product.getProduct_category();
+            if (category != null) {
+                uniqueCategories.add(category);
+            }
+        }
+        return uniqueCategories;
+    }
+
+    @Override
+    public List<Product> filterProductsByCategory(List<Product> allProducts, String category) {
+        return allProducts.stream()
+                .filter(product -> product.getProduct_category() != null &&
+                        product.getProduct_category().equalsIgnoreCase(category))
+                .collect(Collectors.toList());
+    }
+
 }

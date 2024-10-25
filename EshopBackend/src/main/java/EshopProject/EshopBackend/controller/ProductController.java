@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @RestController
 @RequestMapping
@@ -49,4 +50,17 @@ public class ProductController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
         }
     }
+
+    @GetMapping("/products/categories")
+    public ResponseEntity<Set<String>> getProductCategories() {
+        Set<String> categories = productService.getUniqueCategories();
+        return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/products/category/{category}")
+    public List<Product> getProductsByCategory(@PathVariable("category") String category) {
+        List<Product> allProducts = productService.getProductsList();
+        return productService.filterProductsByCategory(allProducts, category);
+    }
+
 }
