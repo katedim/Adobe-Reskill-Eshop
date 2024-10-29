@@ -63,21 +63,18 @@ public class CartController {
 
     @PutMapping("/{cartId}/removeProduct/{productId}")
     public Cart removeProductFromCart(@PathVariable Long cartId, @PathVariable Long productId) {
-        // Fetch the cart by its ID
+
         Cart existingCart = cartService.getCartById(cartId);
         if (existingCart == null) {
             throw new RuntimeException("Cart with id " + cartId + " not found.");
         }
 
-        // Fetch the product to remove
         Product productToRemove = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product with id " + productId + " not found"));
 
-        // Get current product items in the cart
         Set<Product> productItems = existingCart.getProductItems();
         System.out.println("Current product items in cart: " + productItems);
 
-        // Check if the product is in the cart and remove it
         if (productItems != null && productItems.contains(productToRemove)) {
             productItems.remove(productToRemove);
         } else {

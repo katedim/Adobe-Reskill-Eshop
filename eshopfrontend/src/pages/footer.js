@@ -1,4 +1,3 @@
-// components/Footer.js
 
 const Footer = () => {
     return (
@@ -6,8 +5,10 @@ const Footer = () => {
             <div className="max-w-screen-xl mx-auto text-center">
                 <p>© {new Date().getFullYear()} Javaria. All Rights Reserved.</p>
                 <nav className="space-x-4">
-                    <a href="/privacy" className="text-gray-400">Privacy Policy</a>
-                    <a href="/terms" className="text-gray-400">Terms of Service</a>
+                        <span className="text-gray-400 cursor-pointer hover:text-gray-300">Privacy Policy</span>
+
+                        <span className="text-gray-400 cursor-pointer hover:text-gray-300">Terms of Service</span>
+
                 </nav>
             </div>
         </footer>

@@ -8,18 +8,16 @@ export default function Cart() {
   const [cart, setCart] = useState(null);  
   const [loading, setLoading] = useState(true);
 
-  // Redirect to login if the user is not logged in
   useEffect(() => {
     if (!isLoggedIn) {
       router.push('/login');
     }
   }, [isLoggedIn, router]);
 
-  // Fetch the cart data only if the user is logged in
   useEffect(() => {
     const fetchCart = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/cart/${userId}`); // Fetch cart without Authorization header
+        const response = await fetch(`http://localhost:8080/cart/${userId}`); 
         if (!response.ok) {
           throw new Error('Failed to fetch cart');
         }
@@ -35,7 +33,7 @@ export default function Cart() {
     if (isLoggedIn) {
       fetchCart();
     }
-  }, [isLoggedIn, userId]); // Fetch cart when isLoggedIn or userId changes
+  }, [isLoggedIn, userId]); 
 
   const handleRemoveProduct = async (productId, productName) => {
     const userConfirmed = window.confirm(`Are you sure you want to remove the ${productName} from your cart?`);
@@ -56,7 +54,6 @@ export default function Cart() {
         throw new Error('Failed to remove product');
       }
 
-      // Fetch the updated cart
       const updatedCartResponse = await fetch(`http://localhost:8080/cart/${userId}`);
       if (!updatedCartResponse.ok) {
         throw new Error('Failed to fetch updated cart');

@@ -15,14 +15,13 @@ public class Cart {
     private long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id", unique = true, nullable = false) // Unique constraint for one-to-one relationship
+    @JoinColumn(name = "user_id", unique = true, nullable = false)
     @JsonBackReference
     private appUser user;
 
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
     private Set<Product> productItems = new HashSet<>();
 
-    // Getters and setters
     public long getId() {
         return id;
     }

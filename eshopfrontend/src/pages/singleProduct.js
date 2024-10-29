@@ -1,4 +1,3 @@
-// pages/singleProduct.js
 import { useAuth } from './context/AuthContext';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -7,13 +6,12 @@ import { FaHeart, FaRegHeart } from 'react-icons/fa';
 export default function SingleProduct() {
     const { isLoggedIn, userId } = useAuth();
     const router = useRouter();
-    const { productId } = router.query; // productId from query parameters
+    const { productId } = router.query; 
     const [product, setProduct] = useState({});
     const [loading, setLoading] = useState(true);
     const [cartId, setCartId] = useState(null);
     const [favorites, setFavorites] = useState([]);
 
-    // Convert productId to a number at the top level
     const numericProductId = productId ? Number(productId) : null;
 
     useEffect(() => {
@@ -41,7 +39,7 @@ export default function SingleProduct() {
                     const response = await fetch(`http://localhost:8080/user/${userId}/favorites`);
                     const data = await response.json();
                     console.log('Fetched favorites:', data);
-                    setFavorites(data.map(fav => fav.id)); // Extract IDs correctly
+                    setFavorites(data.map(fav => fav.id)); 
                 } catch (error) {
                     console.error('Error fetching favorites:', error);
                 }
@@ -133,7 +131,7 @@ export default function SingleProduct() {
                         onClick={toggleFavorite}
                         className="favorite-button mt-2 bg-transparent border-none cursor-pointer"
                     >
-                        {favorites.includes(numericProductId) ? (  // Check against numericProductId
+                        {favorites.includes(numericProductId) ? ( 
                             <FaHeart className="text-red-500 text-xl cursor-pointer hover:text-red-700" />
                         ) : (
                             <FaRegHeart className="text-red-500 text-xl cursor-pointer hover:text-red-700" />

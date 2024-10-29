@@ -2,6 +2,7 @@ package EshopProject.EshopBackend.controller;
 
 
 import EshopProject.EshopBackend.model.Product;
+import EshopProject.EshopBackend.repository.ProductRepository;
 import EshopProject.EshopBackend.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,9 @@ public class ProductController {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @PostMapping("/admin/products")
     public Product createProduct(@RequestBody Product product) {
@@ -41,14 +45,11 @@ public class ProductController {
 
     @DeleteMapping("/admin/products/{productId}")
     public ResponseEntity<String> deleteProductById(@PathVariable("productId") Long productId) {
-        try {
-            productService.deleteProductById(productId);
-            return ResponseEntity.ok("Product deleted successfully");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred");
+        if (!productRepository.existsById(productId)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Product not found");
         }
+        productService.deleteProductById(productId);
+        return ResponseEntity.ok("Product deleted successfully");
     }
 
     @GetMapping("/products/categories")

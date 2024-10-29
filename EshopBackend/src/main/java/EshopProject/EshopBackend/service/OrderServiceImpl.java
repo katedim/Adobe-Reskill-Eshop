@@ -48,12 +48,11 @@ public class OrderServiceImpl implements OrderService{
     public List<Order> findOrdersByUserId(Long userId) {
         appUser user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found with id " + userId));
-        return orderRepository.findByUser(user); // Assuming you have a method in OrderRepository
+        return orderRepository.findByUser(user);
     }
 
     @Override
     public Order updateOrder(Order order) {
-        // Check if the order exists
         Optional<Order> updateOrder = orderRepository.findById(order.getId());
         if (updateOrder.isPresent()) {
             Order existingOrder = updateOrder.get();

@@ -1,4 +1,3 @@
-// context/AuthContext.js
 
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
@@ -12,7 +11,6 @@ export function AuthProvider({ children }) {
   const [cartId, setCartId] = useState(null);
   const router = useRouter();
 
-  // Load authentication state from localStorage when the app starts
   useEffect(() => {
     const storedUser = localStorage.getItem('auth');
     if (storedUser) {
@@ -20,7 +18,7 @@ export function AuthProvider({ children }) {
       setIsLoggedIn(true);
       setUserRole(parsedUser.role);
       setUserId(parsedUser.id);
-      fetchCartId(parsedUser.id); // Fetch cart ID when user is logged in
+      fetchCartId(parsedUser.id); 
     }
   }, []);
 
@@ -29,7 +27,7 @@ export function AuthProvider({ children }) {
       const response = await fetch(`http://localhost:8080/cart/${userId}`);
       if (response.ok) {
         const cart = await response.json();
-        setCartId(cart.id); // Assuming cart object has an id field
+        setCartId(cart.id);
       } else {
         console.error('Failed to fetch cart ID');
       }

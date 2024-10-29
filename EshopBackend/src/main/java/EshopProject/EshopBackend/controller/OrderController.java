@@ -36,12 +36,12 @@ public class OrderController {
         System.out.println("Creating order for user: " + order.getUser().getId());
         System.out.println("Number of products: " + (order.getProductItems() != null ? order.getProductItems().size() : 0));
 
-        // Find the user by ID
+
         appUser user = userRepository.findById(order.getUser().getId())
                 .orElseThrow(() -> new RuntimeException("User not found"));
         order.setUser(user);
 
-        // Check if productItems is null or empty
+
         Set<Product> productItems = new HashSet<>();
         if (order.getProductItems() != null) {
             for (Product product : order.getProductItems()) {
@@ -51,10 +51,9 @@ public class OrderController {
             }
         }
 
-        // Set the productItems for the order
+
         order.setProductItems(productItems);
 
-        // Save the order
         return orderRepository.save(order);
     }
 

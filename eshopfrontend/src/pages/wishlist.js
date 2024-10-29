@@ -15,7 +15,6 @@ export default function Wishlist() {
         }
     }, [isLoggedIn, router]);
 
-    // Fetch user's favorites and cart ID
     useEffect(() => {
         const fetchFavorites = async () => {
             try {

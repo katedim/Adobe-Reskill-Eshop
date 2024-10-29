@@ -133,9 +133,9 @@ export default function Home() {
                 className="favorite-button mt-2 bg-transparent border-none cursor-pointer"
               >
                 {favorites.includes(product.id) ? (
-                  <FaHeart className="text-red-500 text-xl cursor-pointer hover:text-red-700" /> // Filled heart
+                  <FaHeart className="text-red-500 text-xl cursor-pointer hover:text-red-700" /> 
                 ) : (
-                  <FaRegHeart className="text-red-500 text-xl cursor-pointer hover:text-red-700" /> // Outlined heart
+                  <FaRegHeart className="text-red-500 text-xl cursor-pointer hover:text-red-700" />  
                 )}
               </button>
             </div>

@@ -82,19 +82,18 @@ public class ProductServiceImpl implements ProductService{
         currentProduct.setProduct_reviews(product.getProduct_reviews());
     }
 
-    // Save the updated product back to the database
     return productRepository.save(currentProduct);
 }
 
 
     @Override
     public void deleteProductById(Long productId) {
-        if (productRepository.existsById(productId)) {
-            productRepository.deleteById(productId);
-        } else {
+        if (!productRepository.existsById(productId)) {
             throw new RuntimeException("Product with id " + productId + " not found");
         }
+        productRepository.deleteById(productId);
     }
+
 
     @Override
     public Set<String> getUniqueCategories() {

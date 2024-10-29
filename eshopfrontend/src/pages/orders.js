@@ -9,7 +9,6 @@ export default function Orders() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Redirect to login if not logged in
     if (!isLoggedIn) {
       router.push('/login');
     }
@@ -17,9 +16,8 @@ export default function Orders() {
 
   useEffect(() => {
     const fetchOrders = async () => {
-      console.log(localStorage); // Log localStorage for debugging
-      try {
-        // Fetch orders without the Authorization header
+      console.log(localStorage); 
+      try { 
         const response = await fetch(`http://localhost:8080/order/${userId}`);
         if (!response.ok) {
           throw new Error('Network response was not ok');
@@ -37,7 +35,7 @@ export default function Orders() {
     if (isLoggedIn) {
       fetchOrders();
     }
-  }, [isLoggedIn, userId]); // Added userId as a dependency
+  }, [isLoggedIn, userId]);  
 
   if (loading) {
     return <p>Loading orders...</p>;

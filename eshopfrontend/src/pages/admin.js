@@ -58,19 +58,24 @@ const Admin = () => {
   const handleDeleteProduct = async (productName, productId) => {
     const confirmDelete = window.confirm(`Are you sure you want to delete the ${productName} product?`);
     if (confirmDelete) {
-      try {
-        const response = await fetch(`http://localhost:8080/admin/products/${productId}`, {
-          method: "DELETE",
-        });
-        if (!response.ok) {
-          throw new Error("Failed to delete product");
+        try {
+            const response = await fetch(`http://localhost:8080/admin/products/${productId}`, {
+                method: "DELETE",
+            });
+            
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || "Failed to delete product");
+            }
+            
+            setProducts(products.filter(product => product.id !== productId));
+        } catch (error) {
+            console.error("Error deleting product:", error.message);
+            alert(error.message);
         }
-        setProducts(products.filter(product => product.id !== productId));
-      } catch (error) {
-        console.error("Error deleting product:", error);
-      }
     }
-  };
+};
+
 
   const handleEditProduct = (product) => {
     setIsEditing(product.id);
@@ -162,6 +167,12 @@ const Admin = () => {
                     onChange={handleChangeProduct}
                     className="border border-gray-300 p-1 rounded mb-2"
                   />
+                  <textarea
+                    name="product_category"
+                    value={editedProductData.product_category}
+                    onChange={handleChangeProduct}
+                    className="border border-gray-300 p-1 rounded mb-2"
+                  />
                   <button
                     onClick={() => handleSaveProduct(product.id)}
                     className="mt-2 bg-green-500 text-white py-1 px-2 rounded hover:bg-green-600"
@@ -180,6 +191,7 @@ const Admin = () => {
                   <h3 className="font-bold">{product.product_name}</h3>
                   <p>Price: ${product.product_price}</p>
                   <p>Description: {product.product_description}</p>
+                  <p>Category: {product.product_category}</p>
                   <button
                     onClick={() => handleEditProduct(product)}
                     className="mt-2 text-blue-500 hover:underline"

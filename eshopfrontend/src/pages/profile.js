@@ -14,9 +14,9 @@ export default function Profile() {
   });
 
   const [loading, setLoading] = useState(true);
-  const [isEditing, setIsEditing] = useState(false); // State to track edit mode
-  const [editedUserData, setEditedUserData] = useState(userData); // State for editable data
-  const [password, setPassword] = useState(''); // Password input state
+  const [isEditing, setIsEditing] = useState(false);  
+  const [editedUserData, setEditedUserData] = useState(userData);  
+  const [password, setPassword] = useState('');  
 
   useEffect(() => {
     if (!isLoggedIn) {
@@ -62,8 +62,7 @@ export default function Profile() {
       setLoading(false);
     }
   };
-
-  // Handle input change when in edit mode
+ 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedUserData({
@@ -71,25 +70,23 @@ export default function Profile() {
       [name]: value
     });
   };
-
-  // Toggle between edit and save mode
+ 
   const toggleEdit = async () => {
     if (isEditing) {
-      // Perform save (this is where you'd send the edited data to the backend)
+ 
       try {
         const response = await fetch(`http://localhost:8080/users/${userId}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ ...editedUserData, password }), // Include password if changed
+          body: JSON.stringify({ ...editedUserData, password }),  
         });
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
-        // Once saved, update the main userData state
+ 
         setUserData(editedUserData);
         console.log('Profile updated successfully');
       } catch (error) {
@@ -97,14 +94,13 @@ export default function Profile() {
       }
     }
 
-    setIsEditing(!isEditing); // Toggle between editing and view mode
+    setIsEditing(!isEditing);  
   };
-
-  // Cancel button logic to discard changes
+ 
   const handleCancel = () => {
-    setEditedUserData(userData); // Revert edited data back to the original userData
-    setPassword(''); // Clear password input
-    setIsEditing(false); // Exit edit mode
+    setEditedUserData(userData); 
+    setPassword('');  
+    setIsEditing(false);  
   };
 
   if (loading) {

@@ -3,58 +3,56 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff; /* Light background color */
-  --foreground: #171717; /* Dark text color */
+  --background: #ffffff; 
+  --foreground: #171717; 
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a; /* Dark background color */
-    --foreground: #ededed; /* Light text color */
+    --background: #0a0a0a; 
+    --foreground: #ededed; 
   }
 }
 
 body {
-  color: var(--foreground); /* Set body text color */
-  background: var(--background); /* Set body background color */
-  font-family: Arial, Helvetica, sans-serif; /* Default font family */
-  padding-top: 76px; /* Space for the fixed header */
-  margin: 0; /* Reset default body margin */
+  color: var(--foreground);
+  background: var(--background); 
+  font-family: Arial, Helvetica, sans-serif; 
+  padding-top: 76px; 
+  margin: 0; 
 }
 
 @layer utilities {
   .text-balance {
-    text-wrap: balance; /* Custom utility for text wrapping */
+    text-wrap: balance; 
   }
 }
-
-/* Additional styling to ensure sticky footer */
+ 
 #root {
-  display: flex; /* Flex container */
-  flex-direction: column; /* Column layout */
-  min-height: 100vh; /* Minimum height of the viewport */
+  display: flex;  
+  flex-direction: column;  
+  min-height: 100vh;  
 }
 
 .main {
-  flex: 1; /* Allow main content to grow and fill available space */
-  margin-bottom: 130px; /* Keep your existing bottom margin */
-  padding: 0 20px; /* Add horizontal padding */
-  max-width: 1200px; /* Set a max-width to control how wide the content gets */
-  margin-left: auto; /* Center the main content */
-  margin-right: auto; /* Center the main content */
+  flex: 1;
+  margin-bottom: 130px; 
+  padding: 0 20px; 
+  max-width: 1200px; 
+  margin-left: auto; 
+  margin-right: auto;  
 }
 
 
-/* Footer Styles */
 footer {
-  background-color: #333; /* Footer background color */
-  color: white; /* Footer text color */
-  text-align: center; /* Center align text */
-  padding: 10px 0; /* Padding for footer */
-  position: fixed; /* Make the footer fixed */
-  left: 0; /* Align to the left */
-  right: 0; /* Align to the right */
-  bottom: 0; /* Stick to the bottom of the viewport */
+  background-color: #333; 
+  color: white; 
+  text-align: center; 
+  padding: 10px 0; 
+  position: fixed; 
+  left: 0; 
+  right: 0;
+  bottom: 0; 
 }
 
 
@@ -179,27 +177,27 @@ footer {
 .product-actions {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end; /* Aligns buttons at the bottom */
+  align-items: flex-end;  
 }
 
 .add-to-cart-button {
   margin-left: 8px;
-  margin-bottom: 2px; /* Bottom margin */
+  margin-bottom: 2px;  
 }
 
 .favorite-button {
-  margin-bottom: 8px; /* Bottom margin */
-  margin-right: 8px; /* Right margin */
+  margin-bottom: 8px; 
+  margin-right: 8px; 
 }
 
 .buy-now-container {
   display: flex;
-  justify-content: center; /* Center the button horizontally */
-  margin-top: 30px; /* Add more top margin */
+  justify-content: center; 
+  margin-top: 30px;
 }
 
 .buy-now-button {
-  background-color: #3498db; /* Blue for buy now button */
+  background-color: #3498db; 
   color: white;
   padding: 15px 25px;
   border: none;
@@ -210,6 +208,6 @@ footer {
 }
 
 .buy-now-button:hover {
-  background-color: #2980b9; /* Darker blue on hover */
-  transform: scale(1.05); /* Slightly enlarge button on hover */
+  background-color: #2980b9; 
+  transform: scale(1.05); 
 }
